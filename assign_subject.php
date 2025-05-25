@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chk = $conn->prepare("SELECT COUNT(*) FROM grades WHERE student_id = ? AND subject_id = ?");
     $chk->execute([$student_id, $subject_id]);
     if ($chk->fetchColumn() > 0) {
-        echo "Šim skolēnam jau ir piešķirts šis priekšmets.";
+        // Kļūdas paziņojums un atgriešanās
+        header("Location: teacher_dashboard.php?error=duplicate#student-" . $student_id);
         exit;
     }
 
